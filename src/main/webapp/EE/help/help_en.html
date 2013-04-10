@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="h.hopmann@52north.org" />
+<meta name="description" content="" />
+<meta http-equiv="Content-Language" content="en" />
+
+<title>Extreme Events Viewer Help - English</title>
+
+<link rel="stylesheet" type="text/css"
+	href="../../EE/resources/css/style.css" />
+
+</head>
+<body>
+
+	<div id="ee-helppage">
+
+		<h1>Extreme Events Viewer - Help</h1>
+		<h2>Contents</h2>
+		<ul>
+			<li><a href="#types">Event Types</a></li>
+			<li><a href="#attributes">Feature Attributes</a></li>
+			<li><a href="#time">Time Picker</a></li>
+			<li><a href="#layer">Layer Selection</a></li>
+			<li><a href="#selection">Selection</a></li>
+			<li><a href="#statistics">Statistics</a></li>
+		</ul>
+
+		<h2>Event Types</h2>
+		<a id="types"></a>
+		<div id="ee_help_events">Enable and disable event types by
+			clicking on the buttons. Right click on one type button for advanced
+			options namely selecting only one type or all types.</div>
+
+		<h2>Feature Attributes</h2>
+		<a id="attributes"></a>
+		<div id="ee_help_attributes">
+			This area shows a list of extreme event features corresponding to the
+			current viewport and filter settings.
+			<ul>
+				<li>Double-clicking a row zooms the map to the selected entry.</li>
+
+				<li>Toggling the "Filter Selection" function hides all
+					unselected entries from further interactions.</li>
+
+				<li>The columns reflect the extreme events attributes and can
+					get reordered by drag operations. Clicking them sorts the data by
+					the corresponding attribute.</li>
+
+				<li>Hovering a column header reveals a context menu with
+					additional options:
+					<ul>
+						<li>For most attribute types, a generic filter interface
+							allows to constrain the set of features. Currently filtered
+							column names are shown in <b><i>bold italic</i></b>.
+						</li>
+						<li>Columns can get hidden/shown using simple check boxes.</li>
+						<li>Direct setting of sorting direction.</li>
+					</ul>
+				</li>
+
+				<li>Right click on an item to open a menu for details, report
+					generation, and statistics view.</li>
+
+				<li>Elements without geometry are highlighted in <i>italics</i>.
+				</li>
+
+				<li>The location of the panel can be changed from bottom to
+					right hand side and the panel can be hidden with the buttons in the
+					top right corner.</li>
+			</ul>
+		</div>
+
+		<h2>Time Picker</h2>
+		<a id="time"></a>
+		<div id="ee_help_timepicker">Allows to filter extreme event data
+			by time interval. The start and end of the interval of interest can
+			get set by dragging the left and right slider thumb or by clicking on
+			the corresponding dates. The arrows at both ends of the time bar
+			allow to enlarge the interval by one time step.</div>
+
+		<h2>Background Information</h2>
+		<a id="layer"></a>
+		<div id="ee_help_layers">This panel allows to select basic map
+			overlays as well as the base map to use. The overlays can enabled and
+			disabled separately and be reordered by drag and drop. Base layers
+			are always drawn first and only one can be active.</div>
+
+		<h2>Selection</h2>
+		<a id="selection"></a>
+		<div id="ee_help_selection">
+			Provides basic tools to select features (= events).
+			<dl>
+				<dt>Select All Visible</dt>
+				<dd>Select all features which are visible in the current map
+					extent.</dd>
+				<dt>Box Selection</dt>
+				<dd>This function allows to click and drag a rectangle on the
+					map to select the area to zoom to.</dd>
+				<dt>Hide Unselected</dt>
+				<dd>Focuses on all currently selected features by hiding all
+					others.</dd>
+				<dt>Zoom to Selection</dt>
+				<dd>Zooms the map to the bounds of all currently selected
+					features.</dd>
+			</dl>
+		</div>
+
+		<h2>Statistics</h2>
+		<a id="statistics"></a>
+		<div id="ee_help_statistics">Provides access to the selection
+			statistics functions. Shows a window with automatically updated
+			statistical values for the current selection of features.</div>
+
+	</div>
+
+</body>
+
+</html>

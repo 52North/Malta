@@ -1,0 +1,105 @@
+/*
+ * Style for the rect between the two time interval bounding thumbs
+ */
+.ee-slider-interval-indicator {
+	top: 0px;
+	height: 21px;
+	position: absolute;
+	background: gray;
+	opacity: 0.5;
+	filter: alpha(opacity =     50);
+}
+
+/* Additional style applied when interval indicator gets dragged */
+.ee-slider-interval-indicator-drag {
+	background: blue;
+}
+
+/* Style for rows in feature grid with no geometry */
+.ee-row-no-geometry td {
+	font-style: italic
+}
+
+/* Style to apply for grid view headers when filteirng is used */
+.ee-header-filtered div {
+	font-style: italic;
+	font-weight: bold
+}
+
+/* Style overrides for help function */
+.ee-help-tooltip dd {
+	margin-left: 2em;
+}
+
+.ee-help-tooltip ol,.ee-help-tooltip dl,.ee-help-tooltip ul {
+	margin: 1.12em 0;
+	padding-left: 2em;
+}
+
+.ee-help-tooltip dl {
+	padding-left: 1em;
+}
+
+.ee-help-tooltip li {
+	display: list-item;
+	list-style-type: disc;
+}
+
+.ee-help-tooltip ol {
+	list-style-type: decimal
+}
+
+.ee-help-tooltip  ol ul,.ee-help-tooltip ul ol,.ee-help-tooltip ul ul,.ee-help-tooltip ol ol
+	{
+	margin-top: 0;
+	margin-bottom: 0
+}
+
+#ee-helppage {
+	font-family: tahoma, arial, verdana, sans-serif;
+	font-size: 0.8em;
+	margin: 1em;
+/* 	width: 500px; */
+}
+
+#ee-helppage h1 {
+	font-family: tahoma, arial, verdana, sans-serif;
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+#ee-helppage h2 {
+	font-family: tahoma, arial, verdana, sans-serif;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+#ee-aboutpage {
+	font-family: tahoma, arial, verdana, sans-serif;
+	font-size: 1.0em;
+	margin: 1em;
+/* 	width: 500px; */
+}
+
+.ee-footer {
+	font-size: 0.95em;
+	color: #aaaaaa;
+}
+
+/* Icons from
+http://projects.opengeo.org/geosilk */
+.icon-chart {
+	background: url('../images/chart_bar.png') no-repeat !important;
+}
+
+.icon-selectbox {
+	background: url('../images/select_box.png') no-repeat !important;
+}
+
+.icon-acrobat {
+	background: url('../images/acrobat.png') no-repeat !important;
+}
+
+.icon-zoom {
+	background: url('../images/zoom.png') no-repeat !important;
+}

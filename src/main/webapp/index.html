@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="h.hopmann@52north.org" />
+<meta name="description" content="" />
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="x-ua-compatible" content="IE=9">
+
+<title>Extreme Events Viewer</title>
+
+<!-- ** CSS ** -->
+<link rel="stylesheet" type="text/css"
+	href="ExtJs/resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css"
+	href="ExtJs/resources/css/xtheme-gray.css" />
+
+<link rel="stylesheet" type="text/css" href="EE/resources/css/style.css" />
+
+<!-- ** Javascript ** -->
+
+<!-- ExtJS -->
+<script type="text/javascript" src="ExtJs/ext-base.js"></script>
+<script type="text/javascript" src="ExtJs/ext-all.js"></script>
+
+<!-- ExtJS User extensions -->
+<script type="text/javascript" src="ExtJsUx/FitToParent.js"></script>
+<script type="text/javascript" src="ExtJsUx/FlotPanel.js"></script>
+<script type="text/javascript" src="ExtJsUx/TimePeriodPicker.js"></script>
+<script type="text/javascript" src="ExtJsUx/slider_ie9_fix.js"></script>
+
+<!-- OpenLayers-->
+<script type="text/javascript" src="OpenLayers/OpenLayers.js"></script>
+
+<!-- GeoExt -->
+<script type="text/javascript" src="GeoExt/GeoExt.js"></script>
+
+<!-- jQuery -->
+<script type="text/javascript" src="jQuery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="jQuery/jquery.flot.js"></script>
+<script type="text/javascript" src="jQuery/jquery.flot.pie.js"></script>
+
+<!-- jsPDF -->
+<script type="text/javascript" src="jsPDF/jspdf.js"></script>
+<script type="text/javascript" src="jsPDF/jspdf.plugin.addimage.js"></script>
+<script type="text/javascript"
+	src="jsPDF/jspdf.plugin.split_text_to_size.js"></script>
+<script type="text/javascript"
+	src="jsPDF/jspdf.plugin.standard_fonts_metrics.js"></script>
+<script type="text/javascript" src="jsPDF/jspdf.plugin.from_html.js"></script>
+<script type="text/javascript" src="jsPDF/FileSaver.js/FileSaver.js"></script>
+<script type="text/javascript" src="jsPDF/BlobBuilder.js/BlobBuilder.js"></script>
+<script type="text/javascript"
+	src="jsPDF/Downloadify/downloadify.min.js"></script>
+<script type="text/javascript" src="jsPDF/Downloadify/swfobject.js"></script>
+<script type="text/javascript" src="jsPDF/base64.js"></script>
+
+<!-- EE -->
+<script type="text/javascript" src="EE/wfsfilterplugin.js"></script>
+<script type="text/javascript" src="EE/statisticsholder.js"></script>
+<script type="text/javascript" src="EE/openlayers_extensions.js"></script>
+<script type="text/javascript" src="EE/settings.js"></script>
+<script type="text/javascript" src="EE/help.js"></script>
+<script type="text/javascript" src="EE/report.js"></script>
+<script type="text/javascript" src="EE/client.js"></script>
+
+<!-- Demo for German localization -->
+<!-- 
+<script type="text/javascript" src="EE/lang/lang-de.js"></script>
+<script type="text/javascript" src="ExtJs/locale/ext-lang-de.js"></script>
+--> 
+
+<script type="text/javascript">
+	Ext.onReady(function() {
+		Ext.QuickTips.init();
+
+		new EE.Client({
+			renderTo : 'eeviewer'	// ID of element to render the client in
+		});
+	});
+</script>
+
+</head>
+<body>
+
+	<!-- Div with dynamic dimensions. -->
+	<div id="eeviewer"
+		style="position: relative; overflow: hidden; margin: 1em; height: 700px;"></div>
+
+</body>
+</html>
