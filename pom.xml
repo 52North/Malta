@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.n52.geostatistics</groupId>
 	<artifactId>malta</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<packaging>war</packaging>
 
 	<name>Malta</name>
-	<description>Extreme weather events viewer for modern web browsers</description>
+	<description>Extreme weather events viewer for modern web browsers. Development was supported by Deutsche Wetterdienst (DWD).</description>
 	<url>https://wiki.52north.org/bin/view/Geostatistics/Malta</url>
 
 	<inceptionYear>2012</inceptionYear>
