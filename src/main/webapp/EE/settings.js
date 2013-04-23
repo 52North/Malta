@@ -48,12 +48,14 @@ EE.Settings.tempFilterBuffer = 1500;
 EE.Settings.eeWfsUrl = "http://my-service/.../wfs?";
 
 EE.Settings.eeWfsNamespace = "<namespace>";
+EE.Settings.eeWfsNamespacePrefix = "<namespace prefix>";
 EE.Settings.eeFeatureTypes = [ "<namespace>:<featureTypeA>",
 		"<namespace>:<featureTypeB>", "<namespace>:<featureTypeC>" ];
 
 EE.Settings.eeWfsUrl = "http://services.eule-gdi.de/geoserver/DWD_PWD/wfs?";
 
 EE.Settings.eeWfsNamespace = "dwd_pwd";
+EE.Settings.eeWfsNamespacePrefix = "dwd_pwd";
 EE.Settings.eeFeatureTypes = [ "DWD_PWD:ee_rpoint", "DWD_PWD:ee_rline",
 		"DWD_PWD:ee_rpol" ];
 

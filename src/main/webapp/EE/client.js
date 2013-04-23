@@ -346,6 +346,7 @@ EE.Client = Ext
 									url : EE.Settings.eeWfsUrl,
 									featureType : featureTypes,
 									featureNS : EE.Settings.eeWfsNamespace,
+									featurePrefix : EE.Settings.eeWfsNamespacePrefix,
 									geometryName : geometryNames,
 									srsName : "EPSG:3857"
 								}),
