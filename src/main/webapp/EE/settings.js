@@ -17,14 +17,12 @@ Ext.namespace("EE.Settings");
 
 // Base layers, automatically setting isBaseLayer config option to true
 // Find more WMS Layers at http://www.mapmatters.org
-EE.Settings.baseLayers = [
-		new OpenLayers.Layer.OSM(null, null, {}),
-		new OpenLayers.Layer.WMS("Blue Marble",
-				"http://demo.mapserver.org/cgi-bin/wms?", {
-					layers : "BlueMarble",
-					format : "image/png",
-					transparent : true
-				}, {}), new OpenLayers.Layer("Blank", {
+EE.Settings.baseLayers = [ new OpenLayers.Layer.OSM(null, null, {}),
+		new OpenLayers.Layer.WMS("Blue Marble", "http://demo.mapserver.org/cgi-bin/wms?", {
+			layers : "BlueMarble",
+			format : "image/png",
+			transparent : true
+		}, {}), new OpenLayers.Layer("Blank", {
 			isBaseLayer : true,
 			projection : OpenLayers.Projection("EPSG:3857")
 		}) ];
@@ -49,8 +47,7 @@ EE.Settings.eeWfsUrl = "http://my-service/.../wfs?";
 
 EE.Settings.eeWfsNamespace = "<namespace>";
 EE.Settings.eeWfsNamespacePrefix = "<namespace prefix>";
-EE.Settings.eeFeatureTypes = [ "<namespace>:<featureTypeA>",
-		"<namespace>:<featureTypeB>", "<namespace>:<featureTypeC>" ];
+EE.Settings.eeFeatureTypes = [ "<namespace>:<featureTypeA>", "<namespace>:<featureTypeB>", "<namespace>:<featureTypeC>" ];
 
 // Attribute name currently used to identify objects e.g. for report name
 // generation and for feature store queries
@@ -62,6 +59,15 @@ EE.Settings.eeCategoryAttr = "ee_cat";
 // Attributes for temporal extent
 EE.Settings.eeBeginAttr = "ee_beg";
 EE.Settings.eeEndAttr = "ee_end";
+
+// Format to use to parse date values from WFS; Defaults to ISO 8601 Date;
+// See http://docs.sencha.com/extjs/3.4.0/#!/api/Date for examples.
+EE.Settings.eeDateFormatOverride = "Y-m-d\\Z";
+
+// Date Format to use to display date columns in attributes table; Defaults to
+// "Y-m-d";
+// See http://docs.sencha.com/extjs/3.4.0/#!/api/Date for examples.
+// EE.Settings.eeDateFormatDisplayOverride = "Y-m-d";
 
 // Categories/event types. Key corresponds to value of eeCategoryAttr
 EE.Settings.eeCats = {
@@ -254,31 +260,23 @@ EE.Settings.numDecimalPlaces = 3;
 // Regular OpenLayers Layers to add to the map
 // See http://www.mapmatters.org or http://geopole.org/ for more!
 EE.Settings.overlayLayers = [
-		// background overlays
-		new OpenLayers.Layer.WMS("Countries",
-				"http://geoportal.logcluster.org:8081/gp_map_service201/wms?",
-				{
-					layers : "SDI-Countries",
-					format : "image/png",
-					transparent : true
-				}, {
-					visibility : false
-				}),
-		new OpenLayers.Layer.WMS("Rivers",
-				"http://nowcoast.noaa.gov/wms/com.esri.wms.Esrimap/forecasts?",
-				{
-					layers : "world_rivers",
-					format : "image/png",
-					transparent : true
-				}, {
-					visibility : false
-				}),
-		new OpenLayers.Layer.WMS("Lakes",
-				"http://nowcoast.noaa.gov/wms/com.esri.wms.Esrimap/forecasts?",
-				{
-					layers : "world_lakes",
-					format : "image/png",
-					transparent : true
-				}, {
-					visibility : false
-				}) ];
+// background overlays
+new OpenLayers.Layer.WMS("Countries", "http://geoportal.logcluster.org:8081/gp_map_service201/wms?", {
+	layers : "SDI-Countries",
+	format : "image/png",
+	transparent : true
+}, {
+	visibility : false
+}), new OpenLayers.Layer.WMS("Rivers", "http://nowcoast.noaa.gov/wms/com.esri.wms.Esrimap/forecasts?", {
+	layers : "world_rivers",
+	format : "image/png",
+	transparent : true
+}, {
+	visibility : false
+}), new OpenLayers.Layer.WMS("Lakes", "http://nowcoast.noaa.gov/wms/com.esri.wms.Esrimap/forecasts?", {
+	layers : "world_lakes",
+	format : "image/png",
+	transparent : true
+}, {
+	visibility : false
+}) ];

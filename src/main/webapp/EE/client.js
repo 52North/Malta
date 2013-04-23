@@ -296,7 +296,9 @@ EE.Client = Ext
 								}
 
 								if (newField.type == 'date') {
-									newField.dateFormat = "Y-m-d\\Z";
+									// Apply dateFormat to parse date strings sent by WFS
+									// See http://docs.sencha.com/extjs/3.4.0/#!/api/Date
+									newField.dateFormat = EE.Settings.eeDateFormatOverride || "c";
 								}
 
 								fields.push(newField);
@@ -313,7 +315,7 @@ EE.Client = Ext
 
 								if (newField.type == 'date') {
 									column.xtype = 'datecolumn';
-									column.format = "Y-m-d";
+									column.format = EE.Settings.eeDateFormatDisplayOverride || "Y-m-d";
 								}
 
 								if (attrSettings.booleanTrueValue != null) {
