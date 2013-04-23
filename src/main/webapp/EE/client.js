@@ -643,7 +643,8 @@ EE.Client = Ext
 								throw e;
 							}
 
-							// Potential improvement: handle errors when connection failed etc.
+							// Potential improvement: handle errors when connection failed
+							// etc.
 							// (featureTypes null or empty)
 							var typeInformation = [];
 							var attributes = null;
@@ -680,8 +681,8 @@ EE.Client = Ext
 						};
 
 						OpenLayers.Request.GET({
-							url : EE.Settings.eeWfsUrl + "REQUEST=describefeaturetype&TYPENAME="
-									+ EE.Settings.eeFeatureTypes.join(","),
+							url : OpenLayers.Util.urlAppend(EE.Settings.eeWfsUrl, "SERVICE=wfs&REQUEST=describefeaturetype&TYPENAME="
+									+ EE.Settings.eeFeatureTypes.join(",")),
 							callback : describeFeatureCallback
 						});
 
@@ -1572,7 +1573,7 @@ EE.Client = Ext
 								autoLoad : {
 									url : url
 								},
-								preventBodyReset: true,
+								preventBodyReset : true,
 								style : {
 									background : 'white'
 								}

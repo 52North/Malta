@@ -199,6 +199,7 @@ EE.Report = Ext.extend(Object,
 						doc.text(this.leftMargin + this.leftIdent, vOffset, doc.splitTextToSize(attributes['ee_displ'] + ' '
 								+ this.strings.unit_displaced, maxTextWidth / 2));
 					}
+					var leftVOffset = vOffset;
 					vOffset = tempOffset;
 
 					// Fatalities
@@ -210,7 +211,7 @@ EE.Report = Ext.extend(Object,
 						doc.text(this.leftMargin + this.leftIdent + maxTextWidth / 2, vOffset + 0.5, doc.splitTextToSize(
 								attributes['ee_death'] + ' ' + this.strings.unit_killed, maxTextWidth / 2));
 					}
-					vOffset = Math.max(tempOffset, vOffset);
+					vOffset = Math.max(leftVOffset, vOffset);
 
 					vOffset += 1.5;
 
