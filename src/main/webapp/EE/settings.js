@@ -51,18 +51,18 @@ EE.Settings.eeFeatureTypes = [ "<namespace>:<featureTypeA>", "<namespace>:<featu
 
 // Attribute name currently used to identify objects e.g. for report name
 // generation and for feature store queries
-EE.Settings.eeWfsId = "ee_id";
+EE.Settings.eeWfsId = "EE_ID";
 
 // Attribute name to use for category/type negotiation
-EE.Settings.eeCategoryAttr = "ee_cat";
+EE.Settings.eeCategoryAttr = "EE_CAT";
 
 // Attributes for temporal extent
-EE.Settings.eeBeginAttr = "ee_beg";
-EE.Settings.eeEndAttr = "ee_end";
+EE.Settings.eeBeginAttr = "EE_BEG";
+EE.Settings.eeEndAttr = "EE_END";
 
 // Format to use to parse date values from WFS; Defaults to ISO 8601 Date;
 // See http://docs.sencha.com/extjs/3.4.0/#!/api/Date for examples.
-EE.Settings.eeDateFormatOverride = "Y-m-d\\Z";
+// EE.Settings.eeDateFormatOverride = "Y-m-d\\Z";
 
 // Date Format to use to display date columns in attributes table; Defaults to
 // "Y-m-d";
@@ -154,90 +154,90 @@ EE.Settings.selectedFeatureStyle = {
 
 // Human readable attribute names
 EE.Settings.eeWfsAttributeMapping = {
-	'ee_id' : {
+	'EE_ID' : {
 		title : 'Identifier', // Text to show as header of table column
 		sortIndex : 1
 	// 1- based index for ordering the columns, lowest index first, highest
 	// last.
 	// Unset indices are set automatically beginnging with index 20.
 	},
-	'ee_cat' : {
+	'EE_CAT' : {
 		title : 'Category'
 	},
-	'ee_beg' : {
+	'EE_BEG' : {
 		title : 'Begin',
 		sortIndex : 10
 	},
-	'ee_end' : {
+	'EE_END' : {
 		title : 'End',
 		sortIndex : 11
 	},
-	'ee_descr' : {
+	'EE_DESCR' : {
 		title : 'Description'
 	},
-	'ee_country' : {
+	'EE_COUNTRY' : {
 		title : 'Country',
 		sortIndex : 20
 	},
-	'ee_dur' : {
+	'EE_DUR' : {
 		title : 'Duration (days)',
 		sortIndex : 21
 	},
-	'ee_death' : {
+	'EE_DEATH' : {
 		title : '# Killed (Estimated number of killed people)'
 	},
-	'ee_displ' : {
+	'EE_DISPL' : {
 		title : '# Displaced (Estimated number of displaced people)'
 	},
-	'ee_damg' : {
+	'EE_DAMG' : {
 		title : 'Damage (USD, estimated)'
 	},
-	'ee_cyacy' : {
+	'EE_CYACY' : {
 		title : 'Cyclone, Anticyclone'
 	},
-	'ee_ccode' : {
+	'EE_CCODE' : {
 		title : 'Country Code (ISO)',
 		sortIndex : 30
 	},
-	'ee_afreg' : {
+	'EE_AFREG' : {
 		title : 'Affected  regions',
 		sortIndex : 31
 	},
-	'ee_lupd' : {
+	'EE_LUPD' : {
 		title : 'Last update',
 		sortIndex : 40
 	},
-	'ee_updby' : {
+	'EE_UPDBY' : {
 		title : 'Updated by (institution)',
 		hidden : true, // Initially hides a column
 		sortIndex : 41
 	// Highest index, even higher than auto-generated indices -> last column
 	},
-	'ee_aidef' : {
+	'EE_AIDEF' : {
 		title : 'Area of interest (definition of extent)',
 		hidden : true
 	},
-	'ee_fkey' : {
+	'EE_FKEY' : {
 		title : 'Foreign key in source dataset',
 		hidden : true
 	},
-	'ee_glide' : {
+	'EE_GLIDE' : {
 		title : 'Glide-ID',
 		hidden : true
 	},
-	'ee_aoisrcid' : {
+	'EE_AOISRCID' : {
 		title : 'Source of geometry',
 		hidden : true
 	},
-	'ee_srcid' : {
+	'EE_SRCID' : {
 		title : 'Origin of event',
 		sortIndex : 3
 	},
-	'src_cat' : {
+	'SRC_CAT' : {
 		title : 'Category in source dataset',
 		hidden : true
 	},
-	'ee_rgid' : {
+	'EE_RGID' : {
 		title : 'Reference Geometry ID',
 		hidden : true
 	},
@@ -246,14 +246,22 @@ EE.Settings.eeWfsAttributeMapping = {
 		booleanTrueValue : '1',
 		booleanUndefinedValue : '',
 		sortIndex : 2
+	},
+	'EE_GTYPE' : {
+		title: 'Geometry type',
+		hidden : true
+	},
+	'EE_CLIMCMT' : {
+		title: 'Comment',
+		hidden : true
 	}
 };
 
 // Settings for attributes to use in statistics. Automatically uses all numeric
 // attributes as described by the WFS, categorical attributes have to be defined
 // explicitly
-EE.Settings.includeInStatistics = [ 'ee_cat' ];
-EE.Settings.excludeFromStatistics = [ 'ee_rgid' ];
+EE.Settings.includeInStatistics = [ 'EE_CAT' ];
+EE.Settings.excludeFromStatistics = [ 'EE_RGID' ];
 
 EE.Settings.numDecimalPlaces = 3;
 

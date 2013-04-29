@@ -100,28 +100,31 @@ if (EE.Settings) {
 
 	// Attribute names
 	var attributeNameMapping = {
-		'ee_id' : 'Kennung',
-		'ee_cat' : 'Kategorie',
-		'ee_beg' : 'Start',
-		'ee_end' : 'Ende',
-		'ee_descr' : 'Beschreibung',
-		'ee_country' : 'Land',
-		'ee_dur' : 'Dauer (Tage)',
-		'ee_death' : '# Getötete (Geschätzte Anzahl getöteter Menschen)',
-		'ee_displ' : '# Vertriebene (Geschätzte Anzahl vertriebener Menschen)',
-		'ee_damg' : 'Schaden (USD, geschätzt)',
-		'ee_cyacy' : 'Zyklon, Antizyklon',
-		'ee_ccode' : 'Ländercode (ISO)',
-		'ee_afreg' : 'Betroffene Regionen',
-		'ee_lupd' : 'Letzte Aktualisierung',
-		'ee_updby' : 'Aktualisiert durch (Institution)',
-		'ee_aidef' : 'Area of interest (Definition der Ausdehnung)',
-		'ee_fkey' : 'Fremdschlüssel in Quelldatenbestand',
-		'ee_glide' : 'Glide-ID',
-		'ee_srcid' : 'Quelle',
-		'src_cat' : 'Kategorie in Quelldatenbestand',
-		'ee_rgid' : 'Referenzgeometriekennung',
-		'EE_SYSBOOL' : 'Systematische Erfassung'
+		'EE_ID' : 'Kennung',
+		'EE_CAT' : 'Kategorie',
+		'EE_BEG' : 'Start',
+		'EE_END' : 'Ende',
+		'EE_DESCR' : 'Beschreibung',
+		'EE_COUNTRY' : 'Land',
+		'EE_DUR' : 'Dauer (Tage)',
+		'EE_DEATH' : '# Getötete (Geschätzte Anzahl getöteter Menschen)',
+		'EE_DISPL' : '# Vertriebene (Geschätzte Anzahl vertriebener Menschen)',
+		'EE_DAMG' : 'Schaden (USD, geschätzt)',
+		'EE_CYACY' : 'Zyklon, Antizyklon',
+		'EE_CCODE' : 'Ländercode (ISO)',
+		'EE_AFREG' : 'Betroffene Regionen',
+		'EE_LUPD' : 'Letzte Aktualisierung',
+		'EE_UPDBY' : 'Aktualisiert durch (Institution)',
+		'EE_AIDEFf' : 'Area of interest (Definition der Ausdehnung)',
+		'EE_FKEY' : 'Fremdschlüssel in Quelldatenbestand',
+		'EE_GLIDE' : 'Glide-ID',
+		'EE_SRCID' : 'Quelle',
+		'SRC_CAT' : 'Kategorie in Quelldatenbestand',
+		'EE_RGID' : 'Referenzgeometriekennung',
+		'EE_SYSBOOL' : 'Systematische Erfassung',
+		'EE_GTYPE' : 'Geometry type',
+		'EE_CLMCMT' : 'Comment',
+		'EE_AOISRCID' : 'Quelle der Geometrie'
 	};
 	for ( var key in EE.Settings.eeWfsAttributeMapping) {
 		EE.Settings.eeWfsAttributeMapping[key].title = attributeNameMapping[key]
@@ -164,7 +167,7 @@ if (EE.WFSFilter.Plugin) {
 
 if (Ext.ux.EE.TimePeriodPicker) {
 	// Time selection
-	
+
 	Ext.apply(Ext.ux.EE.TimePeriodPicker.prototype.strings, {
 		tooltip_begincrementor_down : 'Start des äußeren Zeitrahmens % Monate früher',
 		tooltip_begincrementor_up : 'Start des äußeren Zeitrahmens % Monate später',

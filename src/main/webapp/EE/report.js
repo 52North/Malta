@@ -34,8 +34,8 @@ EE.Report = Ext.extend(Object,
 
 			strings : {
 				no_value : 'No Value',
-				header : 'Created by Malta | Extreme Events Viewer',
-				title : 'Report about extreme weather and climate events',
+				header : 'Created by EE Viewer',
+				title : 'RCC-CM WMO RA VI Report about extreme weather and climate events',
 				caption_event : 'Event',
 				caption_id : 'Id',
 				caption_date : 'Date, time period',
@@ -61,8 +61,8 @@ EE.Report = Ext.extend(Object,
 				this.rightMargin = 2;
 				this.leftIdent = 0.3;
 
-				this.logoWidth = 6.03;
-				this.logoHeight = 3;
+				this.logoWidth = 6.0;
+				this.logoHeight = 2.025;
 				Ext.apply(this, config || {});
 			},
 
@@ -130,7 +130,7 @@ EE.Report = Ext.extend(Object,
 					captionFont();
 					doc.text(this.leftMargin, vOffset, doc.splitTextToSize(this.strings.caption_event, maxTextWidth));
 					normalFont();
-					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['ee_cat']
+					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['EE_CAT']
 							|| this.strings.no_value, maxTextWidth - 3));
 
 					// Id
@@ -139,14 +139,14 @@ EE.Report = Ext.extend(Object,
 							maxTextWidth));
 					normalFont();
 					doc.text(this.leftMargin + this.leftIdent + maxTextWidth - 3, vOffset + 0.5, doc.splitTextToSize(
-							attributes['ee_id'] || this.strings.no_value, 2.5));
+							attributes['EE_ID'] || this.strings.no_value, 2.5));
 					vOffset += 1.5;
 
 					// Date Time
 					captionFont();
 					doc.text(this.leftMargin, vOffset, doc.splitTextToSize(this.strings.caption_date, maxTextWidth));
 					var dateText = attributes[EE.Settings.eeBeginAttr] + ' - ' + attributes[EE.Settings.eeEndAttr] + ', '
-							+ attributes['ee_dur'] + ' days';
+							+ attributes['EE_DUR'] + ' days';
 					normalFont();
 					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(dateText, maxTextWidth));
 					vOffset += 1.5;
@@ -163,7 +163,7 @@ EE.Report = Ext.extend(Object,
 					// Affected Country
 					captionFont();
 					doc.text(this.leftMargin, vOffset, doc.splitTextToSize(this.strings.caption_affectedcountry, maxTextWidth));
-					var affCountryText = attributes['ee_country'] + ' (' + attributes['ee_ccode'] + ')';
+					var affCountryText = attributes['EE_COUNTRY'] + ' (' + attributes['EE_CCODE'] + ')';
 					normalFont();
 					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(affCountryText, maxTextWidth));
 					vOffset += 1.5;
@@ -172,7 +172,7 @@ EE.Report = Ext.extend(Object,
 					captionFont();
 					doc.text(this.leftMargin, vOffset, doc.splitTextToSize(this.strings.caption_affectedregions, maxTextWidth));
 					normalFont();
-					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['ee_afreg']
+					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['EE_AFREG']
 							|| this.strings.no_value, maxTextWidth));
 					vOffset += 1.5;
 
@@ -180,7 +180,7 @@ EE.Report = Ext.extend(Object,
 					captionFont();
 					doc.text(this.leftMargin, vOffset, doc.splitTextToSize(this.strings.caption_description, maxTextWidth));
 					normalFont();
-					var lines = doc.splitTextToSize(attributes['ee_descr'] || this.strings.no_value, maxTextWidth);
+					var lines = doc.splitTextToSize(attributes['EE_DESCR'] || this.strings.no_value, maxTextWidth);
 					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, lines);
 					vOffset += ((lines.length * 12) / 72) * 2.54 + 1.5;
 
@@ -190,27 +190,28 @@ EE.Report = Ext.extend(Object,
 					doc.text(this.leftMargin, vOffset, doc.splitTextToSize(this.strings.caption_impacts, maxTextWidth / 2));
 					vOffset += 0.5;
 					normalFont();
-					if (attributes['ee_damg']) {
-						doc.text(this.leftMargin + this.leftIdent, vOffset, doc.splitTextToSize(attributes['ee_damg'] + ' '
+					if (attributes['EE_DAMG']) {
+						doc.text(this.leftMargin + this.leftIdent, vOffset, doc.splitTextToSize(attributes['EE_DAMG'] + ' '
 								+ this.strings.unit_damage, maxTextWidth / 2));
 						vOffset += 0.5;
 					}
-					if (attributes['ee_displ']) {
-						doc.text(this.leftMargin + this.leftIdent, vOffset, doc.splitTextToSize(attributes['ee_displ'] + ' '
+					if (attributes['EE_DISPL']) {
+						doc.text(this.leftMargin + this.leftIdent, vOffset, doc.splitTextToSize(attributes['EE_DISPL'] + ' '
 								+ this.strings.unit_displaced, maxTextWidth / 2));
 					}
 					var leftVOffset = vOffset;
 					vOffset = tempOffset;
-
+					
 					// Fatalities
 					captionFont();
 					doc.text(this.leftMargin + maxTextWidth / 2, vOffset, doc.splitTextToSize(this.strings.caption_fatalities,
 							maxTextWidth / 2));
 					normalFont();
-					if (attributes['ee_death']) {
+					if (attributes['EE_DEATH']) {
 						doc.text(this.leftMargin + this.leftIdent + maxTextWidth / 2, vOffset + 0.5, doc.splitTextToSize(
-								attributes['ee_death'] + ' ' + this.strings.unit_killed, maxTextWidth / 2));
+								attributes['EE_DEATH'] + ' ' + this.strings.unit_killed, maxTextWidth / 2));
 					}
+					// Maximum of left and right column v-offset
 					vOffset = Math.max(leftVOffset, vOffset);
 
 					vOffset += 1.5;
@@ -219,16 +220,16 @@ EE.Report = Ext.extend(Object,
 					captionFont();
 					doc.text(this.leftMargin, vOffset, doc.splitTextToSize(this.strings.caption_origin, maxTextWidth));
 					normalFont();
-					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['ee_srcid']
+					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['EE_SRCID']
 							|| this.strings.no_value, maxTextWidth));
 
-					if (attributes['ee_aoisrcid']) {
+					if (attributes['EE_AOISRCID']) {
 						captionFont();
 						doc.text(this.leftMargin + maxTextWidth / 2, vOffset, doc.splitTextToSize(this.strings.caption_geomsource,
 								maxTextWidth / 2));
 						normalFont();
 						doc.text(this.leftMargin + this.leftIdent + maxTextWidth / 2, vOffset + 0.5, doc.splitTextToSize(
-								attributes['ee_aoisrcid'], maxTextWidth / 2));
+								attributes['EE_AOISRCID'], maxTextWidth / 2));
 					}
 					
 					vOffset += 1.5;
@@ -237,7 +238,7 @@ EE.Report = Ext.extend(Object,
 					captionFont();
 					doc.text(this.leftMargin, vOffset, doc.splitTextToSize(this.strings.caption_authors, maxTextWidth));
 					normalFont();
-					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['ee_updby']
+					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['EE_UPDBY']
 							|| this.strings.no_value, maxTextWidth));
 					vOffset += 1.5;
 
@@ -245,7 +246,7 @@ EE.Report = Ext.extend(Object,
 					captionFont();
 					doc.text(this.leftMargin, vOffset, doc.splitTextToSize(this.strings.caption_lastupdate, maxTextWidth));
 					normalFont();
-					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['ee_lupd']
+					doc.text(this.leftMargin + this.leftIdent, vOffset + 0.5, doc.splitTextToSize(attributes['EE_LUPD']
 							|| this.strings.no_value, maxTextWidth));
 					vOffset += 1.5;
 

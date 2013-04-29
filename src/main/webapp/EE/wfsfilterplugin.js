@@ -336,6 +336,7 @@ EE.WFSFilter.Plugin = Ext.extend(Ext.util.Observable, {
 						case 'int':
 						case 'float':
 						case 'double':
+						case 'decimal':
 							filterClass = EE.WFSFilter.Numeric;
 							break;
 						case 'string':

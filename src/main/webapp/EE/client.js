@@ -295,7 +295,7 @@ EE.Client = Ext
 									};
 								}
 
-								if (newField.type == 'date') {
+								if (newField.type == 'date' || newField.type == 'dateTime') {
 									// Apply dateFormat to parse date strings sent by WFS
 									// See http://docs.sencha.com/extjs/3.4.0/#!/api/Date
 									newField.dateFormat = EE.Settings.eeDateFormatOverride || "c";
@@ -313,7 +313,7 @@ EE.Client = Ext
 									_sortIndex : attrSettings.sortIndex || i + 20
 								};
 
-								if (newField.type == 'date') {
+								if (newField.type == 'date' || newField.type == 'dateTime') {
 									column.xtype = 'datecolumn';
 									column.format = EE.Settings.eeDateFormatDisplayOverride || "Y-m-d";
 								}
@@ -589,8 +589,9 @@ EE.Client = Ext
 								if (EE.Settings.excludeFromStatistics.indexOf(f.name) != -1) {
 									continue;
 								}
-								if (f.type == 'int' || f.type == 'float' || f.type == 'double'
+								if (f.type == 'int' || f.type == 'float' || f.type == 'double' || f.type == 'decimal'
 										|| EE.Settings.includeInStatistics.indexOf(f.name) != -1) {
+									// Makes all numeric attributes available for the statistics view
 									this.statisticsAttributes.push(f);
 								}
 							}
