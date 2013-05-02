@@ -103,3 +103,6 @@ http://projects.opengeo.org/geosilk */
 .icon-zoom {
 	background: url('../images/zoom.png') no-repeat !important;
 }
+.icon-export {
+	background: url('../images/table_save.png') no-repeat !important;
+}

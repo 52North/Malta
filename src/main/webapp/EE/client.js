@@ -55,6 +55,7 @@ EE.Client = Ext
 						action_hideunselected : 'Hide Unselected',
 						action_showstatistics : 'Show Statistics',
 						action_zoomtoselection : 'Zoom to Selection',
+						action_exportselectioncsv : 'Export as CSV',
 						context_showdetails : 'Details...',
 						context_createreport : 'Create Report',
 						context_showonlythis : 'Show only this category',
@@ -69,11 +70,13 @@ EE.Client = Ext
 						tooltip_button_help : 'Open full help in new window',
 						tooltip_tool_help : 'Show help for this area',
 						tooltip_tool_switchposition : 'Switch position of this panel',
+						tooltip_exportselectioncsv : 'Exports currently selected features as single CSV file',
 						message_exporterror : 'An unkown error occured while exporting data',
 						message_heading_error : 'Error',
 						message_heading_success : 'Success',
 						message_exportsuccess : 'Data exported sucessfully',
-						message_nogeometry : 'No geometry available!'
+						message_nogeometry : 'No geometry available!',
+						message_noselection : 'No events selected!'
 
 					},
 					actions : null, // Wraps all reusable Actions
@@ -491,32 +494,34 @@ EE.Client = Ext
 											return;
 										}
 										var feature = record.data.feature;
-										var menu = new Ext.menu.Menu({
+										var menu = new Ext.menu.Menu(
+												{
 
-											items : [ {
-												text : this.strings.context_showdetails,
-												handler : function() {
-													this.showFeatureDetails(feature);
-												},
-												scope : this
-											}, {
-												text : this.strings.context_createreport,
-												handler : function() {
-													this.downloadReport(feature);
-												},
-												scope : this
-											}
-											// ,
-											// {
-											// text : 'Export events',
-											// handler : function() {
-											// this.exportEvents([ feature ]);
-											// },
-											// scope : this
-											// }
-											, '-', this.actions.zoomToSelection, this.actions.showStatistics ]
+													items : [ {
+														text : this.strings.context_showdetails,
+														handler : function() {
+															this.showFeatureDetails(feature);
+														},
+														scope : this
+													}, {
+														text : this.strings.context_createreport,
+														handler : function() {
+															this.downloadReport(feature);
+														},
+														scope : this
+													}
+													// ,
+													// {
+													// text : 'Export events',
+													// handler : function() {
+													// this.exportEvents([ feature ]);
+													// },
+													// scope : this
+													// }
+													, '-', this.actions.zoomToSelection, this.actions.showStatistics,
+															this.actions.exportSelectionCSV ]
 
-										});
+												});
 										menu.showAt(e.xy);
 										e.preventDefault();
 									},
@@ -591,7 +596,8 @@ EE.Client = Ext
 								}
 								if (f.type == 'int' || f.type == 'float' || f.type == 'double' || f.type == 'decimal'
 										|| EE.Settings.includeInStatistics.indexOf(f.name) != -1) {
-									// Makes all numeric attributes available for the statistics view
+									// Makes all numeric attributes available for the statistics
+									// view
 									this.statisticsAttributes.push(f);
 								}
 							}
@@ -804,6 +810,80 @@ EE.Client = Ext
 							},
 							scope : this
 						});
+
+						this.actions.exportSelectionCSV = new Ext.Action({
+							iconCls : 'icon-export',
+							text : this.strings.action_exportselectioncsv,
+							tooltip : this.strings.tooltip_exportselectioncsv,
+							handler : function(button) {
+								var selFeatures = this.wfsLayer.selectedFeatures;
+								if (!selFeatures || selFeatures.length == 0) {
+									Ext.MessageBox.alert(this.strings.message_heading_error, this.strings.message_noselection);
+									return;
+								}
+
+								var sourceProj = this.wfsLayer.projection;
+								var destProj = new OpenLayers.Projection('EPSG:4326');
+
+								// Will hold all attribute names of the actual wfs feature types
+								// in use. Usually not all features have the same attribute
+								// information, so this information originally queried from
+								// the describefeaturetype request will be used.
+								var allAttributes = Ext.pluck(this.featureGrid.getColumnModel().config, 'dataIndex');
+
+								// Function eventually called by downloadify to create output
+								// only if user really downloads file
+								var csvExportFunc = function() {
+
+									var out = [];
+									var line = [];
+									var attributesCount = allAttributes.length;
+									for ( var i = 0; i < attributesCount; i++) {
+										line.push(allAttributes[i]);
+									}
+									line.push('GEOMETRY');
+									out.push(line.join(','));
+
+									var feature, value;
+
+									for ( var i = 0; i < selFeatures.length; i++) {
+										line = [];
+										feature = selFeatures[i];
+										for ( var j = 0; j < attributesCount; j++) {
+											// Ensures that there is a column for all attributes, not
+											// just the ones present for this individual feature
+											value = feature.attributes[allAttributes[j]];
+											if (value) {
+												// Escape double quotes
+												value = value.replace(/"/g, '""');
+												// remove all new lines
+												value = value.replace(/(\r|\n|\r\n)/gm, ' ');
+											}
+											line.push(value ? '"' + value + '"' : '');
+										}
+
+										// add WKT, if there is a geometry
+										if (feature.geometry) {
+											line.push('"' + feature.geometry.clone().transform(sourceProj, destProj).toString() + '"');
+										} else {
+											line.push('');
+										}
+
+										out.push(line.join(','));
+									}
+									return out.join('\n');
+
+								};
+								var filename = 'Export_EEViewer.csv';
+								this.showDownloadifyWindow({
+									filename : filename,
+									data : csvExportFunc,
+									message : 'Export of "' + filename + '"',
+									dataType : 'string'
+								});
+							},
+							scope : this
+						});
 					},
 
 					/*
@@ -841,7 +921,7 @@ EE.Client = Ext
 														this.downloadReport(feature);
 													},
 													scope : this
-												} ]
+												}, this.actions.exportSelectionCSV ]
 											});
 
 											contextMenu.showAt(e.xy);
@@ -1000,12 +1080,13 @@ EE.Client = Ext
 									{
 										xtype : 'buttongroup',
 										title : this.strings.group_selection,
-										columns : 2,
+										columns : 3,
 										defaults : {
 											scale : 'small'
 										},
 										items : [ this.actions.selectAllVisible, this.actions.toggleBoxSelection,
-												this.actions.toggleHideUnselected, this.actions.zoomToSelection ],
+												this.actions.toggleHideUnselected, this.actions.zoomToSelection,
+												this.actions.exportSelectionCSV ],
 										tools : [ {
 											id : 'help',
 											qtip : this.strings.tooltip_tool_help,
@@ -1666,14 +1747,22 @@ EE.Client = Ext
 									Downloadify.create(comp.getEl().dom, {
 										filename : options.filename || 'download.dat',
 										data : function() {
-											// Feature detection, not all browsers have btoa, use
-											// external implementation instead
-											if (!window.btoa) {
-												window.btoa = base64.encode;
+											var data = options.data.call ? options.data() : options.data;
+
+											if (!options.dataType) {
+												// if data type not set explicitly use base64 encoding
+
+												// Feature detection, not all browsers have btoa, use
+												// external implementation instead
+												if (!window.btoa) {
+													window.btoa = base64.encode;
+												}
+												// encode as base64, since downloadify seems to have
+												// problems for example with encoded image data in pdf
+												data = btoa(data) || '';
 											}
-											// encode as base64, since downloadify seems to have
-											// problems with encoded image data in pdf
-											return btoa(options.data) || '';
+
+											return data;
 										},
 										onComplete : function() {
 											Ext.MessageBox.alert(this.strings.message_heading_success, this.strings.message_exportsuccess);
@@ -1689,8 +1778,9 @@ EE.Client = Ext
 										transparent : true,
 										append : false,
 										strings : this.strings,
-										dataType : 'base64' // Since there seem to be problems with
-									// the encoded image data in pdf stream
+										dataType : options.dataType || 'base64' // Since there seem
+										// to be problems with the encoded image data in pdf stream
+									// default to base64 and encode later on
 									});
 								},
 								scope : this
