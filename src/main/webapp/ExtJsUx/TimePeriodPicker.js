@@ -382,8 +382,8 @@ Ext.ux.EE.TimePeriodPicker = Ext.extend(Ext.Container, {
 			},
 			layout : {
 				type : "hBox",
-				pack : "start",
-				align : "stretch"
+				pack : "start"
+//				align : "stretch"
 			},
 			anchor : "100%",
 			height : 22,
@@ -408,8 +408,8 @@ Ext.ux.EE.TimePeriodPicker = Ext.extend(Ext.Container, {
 			},
 			layout : {
 				type : "hBox",
-				pack : "start",
-				align : "stretch"
+				pack : "start"
+//				align : "stretch"
 			},
 			anchor : "100%",
 			height : 22,
@@ -515,20 +515,21 @@ Ext.ux.EE.TimePeriodPicker = Ext.extend(Ext.Container, {
 		var panel = new Ext.Container({
 			layout : {
 				type : 'hbox',
-				pack : 'start',
-				align : 'stretch'
+				pack : 'start'
+//				align : 'stretch'
 			},
+			height: 22,
 			width : 40,
 			items : [ Ext.applyIf({
 				xtype : 'button',
-				text : "<",
+				text : "&lt;",
 				width : 20,
 				handler : function() {
 					handler.call(scope || this, -1);
 				}
 			}, options), Ext.applyIf({
 				xtype : 'button',
-				text : ">",
+				text : "&gt;",
 				width : 20,
 				handler : function() {
 					handler.call(scope || this, 1);
