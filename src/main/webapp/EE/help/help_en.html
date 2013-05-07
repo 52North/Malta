@@ -40,17 +40,23 @@
 			This area shows a list of extreme event features corresponding to the
 			current viewport and filter settings.
 			<ul>
-				<li>Double-clicking a row zooms the map to the selected entry.</li>
+				<li>Double-clicking a row <em>zooms</em> the map to the
+					selected entry.
+				</li>
 
-				<li>Toggling the "Filter Selection" function hides all
-					unselected entries from further interactions.</li>
+				<li>Toggling the <em>"Filter Selection"</em> function hides all
+					unselected entries from further interactions.
+				</li>
 
-				<li>The columns reflect the extreme events attributes and can
-					get reordered by drag operations. Clicking them sorts the data by
-					the corresponding attribute.</li>
+				<li>The <em>columns</em> reflect the extreme events attributes.
+					They can be <em>reordered</em> by drag and drop operations.
+					Clicking them <em>sort</em>s the data by the corresponding
+					attribute.
+				</li>
 
-				<li>Hovering a column header reveals a context menu with
-					additional options:
+				<li>Hovering the cursor over column header reveals a button
+					that opens the <em>attribute context menu</em> with additional
+					options:
 					<ul>
 						<li>For most attribute types, a generic filter interface
 							allows to constrain the set of features. Currently filtered
@@ -61,15 +67,18 @@
 					</ul>
 				</li>
 
-				<li>Right click on an item to open a menu for details, report
-					generation, and statistics view.</li>
+				<li>Right click on an item to open the <em>event menu</em> with
+					details and report generation for single events, and statistics
+					view and data export options for single or multiple events.
+				</li>
 
 				<li>Elements without geometry are highlighted in <i>italics</i>.
 				</li>
 
-				<li>The location of the panel can be changed from bottom to
-					right hand side and the panel can be hidden with the buttons in the
-					top right corner.</li>
+				<li>The <em>location of the panel</em> can be changed from
+					bottom to right hand side and the panel can be hidden with the
+					buttons in the top right corner.
+				</li>
 			</ul>
 		</div>
 
@@ -88,10 +97,12 @@
 			disabled separately and be reordered by drag and drop. Base layers
 			are always drawn first and only one can be active.</div>
 
-		<h2>Selection</h2>
+		<h2>Selections</h2>
 		<a id="selection"></a>
 		<div id="ee_help_selection">
-			Provides basic tools to select features (= events).
+			Provides basic tools to select features (= events), to configure
+			visualisation based on currently selected events, and to export the
+			currently selected features.
 			<dl>
 				<dt>Select All Visible</dt>
 				<dd>Select all features which are visible in the current map
@@ -105,6 +116,10 @@
 				<dt>Zoom to Selection</dt>
 				<dd>Zooms the map to the bounds of all currently selected
 					features.</dd>
+				<dt>Export as CSV</dt>
+				<dd>Download the attributes and geometries (as well known text,
+					WKT) of all currently selected features as a comma seperated values
+					(CSV) file.</dd>
 			</dl>
 		</div>
 
