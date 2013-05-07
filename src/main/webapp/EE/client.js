@@ -28,8 +28,9 @@ EE.Client = Ext
 					strings : {
 						group_event_types : 'Event Types',
 						group_time : 'Time',
-						group_selection : 'Selection',
+						group_selection : 'Selections',
 						group_statistics : 'Statistics',
+						panel_title : EE.Settings.title,
 						panel_layers : 'Background Information',
 						panel_attributes : 'Feature Attributes',
 						button_about : 'About',
@@ -1196,7 +1197,7 @@ EE.Client = Ext
 						});
 
 						this.displayPanel = new Ext.Panel({
-							title : "Malta | Extreme Events Viewer",
+							title : this.strings.panel_title,
 							layout : 'border',
 							height : this.height,
 							width : this.width,
