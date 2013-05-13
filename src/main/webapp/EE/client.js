@@ -1059,9 +1059,34 @@ EE.Client = Ext
 						var toolbar = new Ext.Toolbar({
 							height : 72,
 							region : "north",
+							enableOverflow : true,
+							layoutConfig : {
+								// Overrides of ToolbarLayout
+								/*
+								 * Items having eeNoOverflow = true will not overflow
+								 */
+								hideItem : function(item) {
+									if (item.eeNoOverflow != true) {
+										Ext.layout.ToolbarLayout.prototype.hideItem.call(this, item);
+									}
+								},
+								/*
+								 * Items will report their width plus their eeAddVirtWidth
+								 * config value (if set)
+								 */
+								getItemWidth : function(item) {
+									if (item.eeNoOverflow === true) {
+										return 0;
+									}
+									var itemAddVirtWidth = item.eeAddVirtWidth || 0;
+									return itemAddVirtWidth + Ext.layout.ToolbarLayout.prototype.getItemWidth.call(this, item);
+								}
+							},
 							items : [
 									this.eventTypeButtonGroup,
 									{
+										eeNoOverflow : true, // Item will never overflow, and will
+										// report no width to toolbar layout
 										xtype : 'buttongroup',
 										title : this.strings.group_time,
 										columns : 2,
@@ -1076,7 +1101,17 @@ EE.Client = Ext
 												this.helpProvider.showHelpTooltip('timepicker', toolEl, 'left');
 											},
 											scope : this
-										} ]
+										} ],
+										listeners : {
+											afterlayout : function(comp) {
+												// Set virtual width addition of event category button
+												// group to the width of this component. This will
+												// ensure, that the event category button group will
+												// overflow bewfore the time group
+												this.eventTypeButtonGroup.eeAddVirtWidth = comp.getWidth();
+											},
+											scope : this
+										}
 									},
 									{
 										xtype : 'buttongroup',
@@ -1138,7 +1173,18 @@ EE.Client = Ext
 											},
 											tooltip : this.strings.tooltip_button_help,
 											scope : this
-										} ]
+										} ],
+										/*
+										 * Override to act as a regular buttongroup for overflow
+										 * menus
+										 */
+										isXType : function(type) {
+											if (type == 'buttongroup') {
+												return true;
+											} else {
+												return Ext.Panel.prototype.isXType.call(this, type);
+											}
+										}
 
 									} ]
 						});
@@ -1769,7 +1815,7 @@ EE.Client = Ext
 										},
 										onComplete : function() {
 											downloadifyWindow.close();
-											Ext.MessageBox.alert(this.strings.message_heading_success, this.strings.message_exportsuccess);	
+											Ext.MessageBox.alert(this.strings.message_heading_success, this.strings.message_exportsuccess);
 										},
 										onError : function() {
 											Ext.MessageBox.alert(this.strings.message_heading_error, this.strings.message_exporterror);
