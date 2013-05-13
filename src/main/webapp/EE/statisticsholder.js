@@ -83,6 +83,10 @@ EE.StatisticsHolder.Numeric = function(name) {
 		return mid;
 	};
 	this.addValue = function(value) {
+		value = parseFloat(value);
+		if (isNaN(value)) {
+			return;
+		}
 		var insertIndex = this.binarySearchInsertionPoint(0, this.values.length, value);
 		this.values.splice(insertIndex, 0, value);
 		this.sum += value;
@@ -100,9 +104,15 @@ EE.StatisticsHolder.Numeric = function(name) {
 		return this.max;
 	};
 	this.getMean = function() {
+		if (this.values.length == 0) {
+			return null;
+		}
 		return this.sum / this.values.length;
 	};
 	this.getSD = function() {
+		if (this.values.length == 0) {
+			return null;
+		}
 		var mean = this.getMean();
 		var sumSqrDif = 0;
 		for ( var i = 0; i < this.values.length; i++) {
@@ -111,6 +121,9 @@ EE.StatisticsHolder.Numeric = function(name) {
 		return Math.sqrt(sumSqrDif / this.values.length);
 	};
 	this.getMedian = function() {
+		if (this.values.length == 0) {
+			return null;
+		}
 		var mid = Math.floor(this.values.length / 2);
 
 		if (this.values.length % 2 != 0) {
@@ -131,7 +144,7 @@ EE.StatisticsHolder.Numeric = function(name) {
 		var panel = null;
 		var binCount = 10;
 		var strings = this.strings;
-		
+
 		var binLabel = new Ext.form.Label({
 			text : binCount + ' ' + this.strings.bins
 		});
@@ -255,8 +268,31 @@ EE.StatisticsHolder.Categorical = function(name) {
 		}
 		this.totalCount++;
 	};
+
+	this.getCategoryName = function(cat) {
+		var categoryMapping = EE.Settings.eeCats[cat];
+		if (categoryMapping) {
+			return categoryMapping.title || cat;
+		} else {
+			return cat;
+		}
+	};
+
+	this.getCategoryColor = function(cat) {
+		var categoryMapping = EE.Settings.eeCats[cat];
+		if (categoryMapping && categoryMapping.style && categoryMapping.style.fillColor) {
+			return categoryMapping.style.fillColor;
+		} else {
+			return null;
+		}
+	};
+
 	this.getMode = function() {
-		return this.maxCat.join(", ");
+		var maxCatTitles = [];
+		for ( var i = 0; i < this.maxCat.length; i++) {
+			maxCatTitles.push(this.getCategoryName(this.maxCat[i]));
+		}
+		return maxCatTitles.join(", ");
 	};
 
 	this.getModeProbability = function() {
@@ -336,9 +372,10 @@ EE.StatisticsHolder.Categorical = function(name) {
 			var data = [];
 			for ( var i = 0, len = freqList.length; i < len; i++) {
 				data.push({
-					label : freqList[i][1],
+					label : this.getCategoryName(freqList[i][1]),
 					data : freqList[i][0],
-					fill : 0.8
+					fill : 0.8,
+					color : this.getCategoryColor(freqList[i][1])
 				});
 			}
 			var options = {

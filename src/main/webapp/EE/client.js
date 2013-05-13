@@ -1740,6 +1740,8 @@ EE.Client = Ext
 					 */
 					showDownloadifyWindow : function(options) {
 
+						var downloadifyWindow = null;
+
 						var downloadifyButton = new Ext.Container({
 							width : 59,
 							height : 24,
@@ -1751,7 +1753,7 @@ EE.Client = Ext
 											var data = options.data.call ? options.data() : options.data;
 
 											if (!options.dataType) {
-												// if data type not set explicitly use base64 encoding
+												// if data type not set explicitly, use base64 encoding
 
 												// Feature detection, not all browsers have btoa, use
 												// external implementation instead
@@ -1766,8 +1768,8 @@ EE.Client = Ext
 											return data;
 										},
 										onComplete : function() {
-											Ext.MessageBox.alert(this.strings.message_heading_success, this.strings.message_exportsuccess);
-
+											downloadifyWindow.close();
+											Ext.MessageBox.alert(this.strings.message_heading_success, this.strings.message_exportsuccess);	
 										},
 										onError : function() {
 											Ext.MessageBox.alert(this.strings.message_heading_error, this.strings.message_exporterror);
@@ -1788,7 +1790,7 @@ EE.Client = Ext
 							}
 						});
 
-						new Ext.Window({
+						downloadifyWindow = new Ext.Window({
 							layout : {
 								type : 'vbox',
 								align : 'stretch',
@@ -1815,26 +1817,8 @@ EE.Client = Ext
 								bodyStyle : 'background:transparent;',
 								items : [ downloadifyButton ]
 							} ]
-						}).show();
+						});
+						downloadifyWindow.show();
 
 					}
-
-				// ,
-				//
-				// exportEvents : function(features, format) {
-				// format = format || OpenLayers.Format.WKT;
-				// format = new format({
-				// 'maxDepth' : 10,
-				// 'extractStyles' : true,
-				// 'internalProjection' : this.map.baseLayer.projection,
-				// 'externalProjection' : new OpenLayers.Projection("EPSG:4326")
-				// });
-				//
-				// if (!features.length) {
-				// features = [ features ];
-				// }
-				// this.showDownloadifyWindow({
-				// data : format.write(features)
-				// });
-				// }
 				});
