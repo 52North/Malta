@@ -189,7 +189,7 @@ EE.Client = Ext
 							allCategories.push(cat);
 							// Add button for event cat to event
 							// type button group
-							var enabled = true;
+							var enabled = EE.Settings.eeCats[cat].enabled !== false;
 							var eventButton = new Ext.Button({
 								text : EE.Settings.eeCats[cat].title || cat,
 								enableToggle : true,
