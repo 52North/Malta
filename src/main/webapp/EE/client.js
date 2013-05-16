@@ -77,7 +77,8 @@ EE.Client = Ext
 						message_heading_success : 'Success',
 						message_exportsuccess : 'Data exported sucessfully',
 						message_nogeometry : 'No geometry available!',
-						message_noselection : 'No events selected!'
+						message_noselection : 'No events selected!',
+						message_nopdfavailable : 'Your Browser does not support PDF creation'
 
 					},
 					actions : null, // Wraps all reusable Actions
@@ -280,6 +281,8 @@ EE.Client = Ext
 								var attrSettings = EE.Settings.eeWfsAttributeMapping[attributes[i].name] || {};
 
 								if (attrSettings.booleanTrueValue != null) {
+									// Special boolean type (overriding WFS type information),
+									// defined by string comparisons
 									newField = {
 										name : attributes[i].name,
 										trueComp : attrSettings.booleanTrueValue,
@@ -293,16 +296,29 @@ EE.Client = Ext
 										type : 'boolean'
 									};
 								} else {
+									// all other regular WFS data types
 									newField = {
 										name : attributes[i].name,
 										type : attributes[i].localType || 'string'
 									};
-								}
 
-								if (newField.type == 'date' || newField.type == 'dateTime') {
-									// Apply dateFormat to parse date strings sent by WFS
-									// See http://docs.sencha.com/extjs/3.4.0/#!/api/Date
-									newField.dateFormat = EE.Settings.eeDateFormatOverride || "c";
+									// Normalize field types, mapping WFS types to ExtJs types
+									// (http://docs.sencha.com/extjs/3.4.0/#!/api/Ext.data.Field-cfg-type)
+									switch (newField.type) {
+									case 'date':
+									case 'dateTime':
+										// Apply dateFormat to parse date strings sent by WFS
+										// See http://docs.sencha.com/extjs/3.4.0/#!/api/Date
+										newField.type = 'date';
+										// Data date format
+										newField.dateFormat = EE.Settings.eeDateFormatOverride || "c";
+										break;
+									case 'float':
+									case 'double':
+									case 'decimal':
+										newField.type = 'float';
+										break;
+									}
 								}
 
 								fields.push(newField);
@@ -317,8 +333,9 @@ EE.Client = Ext
 									_sortIndex : attrSettings.sortIndex || i + 20
 								};
 
-								if (newField.type == 'date' || newField.type == 'dateTime') {
+								if (newField.type == 'date') {
 									column.xtype = 'datecolumn';
+									// Display date format
 									column.format = EE.Settings.eeDateFormatDisplayOverride || "Y-m-d";
 								}
 
@@ -495,34 +512,25 @@ EE.Client = Ext
 											return;
 										}
 										var feature = record.data.feature;
-										var menu = new Ext.menu.Menu(
-												{
+										var menu = new Ext.menu.Menu({
 
-													items : [ {
-														text : this.strings.context_showdetails,
-														handler : function() {
-															this.showFeatureDetails(feature);
-														},
-														scope : this
-													}, {
-														text : this.strings.context_createreport,
-														handler : function() {
-															this.downloadReport(feature);
-														},
-														scope : this
-													}
-													// ,
-													// {
-													// text : 'Export events',
-													// handler : function() {
-													// this.exportEvents([ feature ]);
-													// },
-													// scope : this
-													// }
-													, '-', this.actions.zoomToSelection, this.actions.showStatistics,
-															this.actions.exportSelectionCSV ]
+											items : [ {
+												text : this.strings.context_showdetails,
+												handler : function() {
+													this.showFeatureDetails(feature);
+												},
+												scope : this
+											}, {
+												text : this.strings.context_createreport,
+												handler : function() {
+													this.downloadReport(feature);
+												},
+												iconCls : 'icon-acrobat',
+												scope : this
+											}, '-', this.actions.zoomToSelection, this.actions.showStatistics,
+													this.actions.exportSelectionCSV ]
 
-												});
+										});
 										menu.showAt(e.xy);
 										e.preventDefault();
 									},
@@ -1759,6 +1767,11 @@ EE.Client = Ext
 					},
 
 					downloadReport : function(feature) {
+						if (Ext.isIE7) {
+							Ext.MessageBox.alert(this.strings.message_heading_error, this.strings.message_nopdfavailable);
+							return;
+						}
+
 						var report = new EE.Report(feature);
 						report.getPDFDoc(function(doc) {
 							var featureID = EE.Settings.eeWfsId;
