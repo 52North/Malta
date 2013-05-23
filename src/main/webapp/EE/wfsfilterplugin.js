@@ -252,7 +252,8 @@ EE.WFSFilter.Boolean = Ext.extend(EE.WFSFilter.Base, {
 	value : null,
 	menu : null,
 	strings : {
-		state : 'State'
+		stateTrue : 'True',
+		stateFalse : 'False'
 	},
 
 	getFilterMenu : function() {
@@ -260,12 +261,29 @@ EE.WFSFilter.Boolean = Ext.extend(EE.WFSFilter.Base, {
 			this.menu = new Ext.menu.Menu({
 				items : [ {
 					xtype : 'menucheckitem',
-					text : this.strings.state,
+					text : this.strings.stateTrue,
 					hideOnClick : false,
+					group : 'booleanFilter' + this.wfsAttribute,
 					listeners : {
 						checkchange : function(comp, checked) {
-							this.value = checked;
-							this.updateTask.delay(2000);
+							if (checked) {
+								this.value = true;
+								this.updateFilter();
+							}
+						},
+						scope : this
+					}
+				}, {
+					xtype : 'menucheckitem',
+					text : this.strings.stateFalse,
+					hideOnClick : false,
+					group : 'booleanFilter' + this.wfsAttribute,
+					listeners : {
+						checkchange : function(comp, checked) {
+							if (checked) {
+								this.value = false;
+								this.updateFilter();
+							}
 						},
 						scope : this
 					}
@@ -310,7 +328,7 @@ EE.WFSFilter.Plugin = Ext.extend(Ext.util.Observable, {
 
 	wfsFilter : null,
 	strings : {
-		filter : 'Filter',
+		filter : 'Activate Filter',
 		inactive : 'Not active'
 	},
 
@@ -406,7 +424,8 @@ EE.WFSFilter.Plugin = Ext.extend(Ext.util.Observable, {
 						var column = view.cm.config[view.hdCtxIndex];
 						column.wfsFilter.setChecked(checked);
 						comp.menu.hide();
-						this.onShowHeaderMenu();
+						this.onShowHeaderMenu();	// Updates filter menu
+						comp.expandMenu();	// force to show new menu immediately
 					},
 					scope : this
 				}

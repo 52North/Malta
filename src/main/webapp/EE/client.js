@@ -211,12 +211,15 @@ EE.Client = Ext
 										// Change positioning of button element
 										buttonCenterEl.position('relative');
 										buttonCenterEl.setStyle('display', 'block'); // for FF
+
 										new GeoExt.FeatureRenderer({
-											width : 16,
+											width : Ext.isIE7 ? 14 : 16,
+											height : 20,
 											style : {
 												position : 'absolute',
 												top : '-2px',
-												left : '0px'
+												left : '0px',
+												'text-align' : 'left'
 											},
 											renderTo : buttonCenterEl,
 											// symbolizer = category style + default
@@ -260,6 +263,10 @@ EE.Client = Ext
 							this.filter.toggleCategory(cat, enabled);
 						}
 						this.eventTypeButtonGroup.doLayout();
+						// Fire additional afterlayout event after adding all available
+						// category buttons to allow the toolbar to correctly realign its
+						// contents and create overflow menu if required
+						this.eventTypeButtonGroup.fireEvent('afterlayout');
 
 						/*
 						 * Callback for inspecWfs call, will receive information about
@@ -1020,6 +1027,8 @@ EE.Client = Ext
 							}
 						});
 
+						var toolbar = null;
+
 						// Button group to reuse for event layers
 						this.eventTypeButtonGroup = new Ext.ButtonGroup({
 							title : this.strings.group_event_types,
@@ -1029,8 +1038,8 @@ EE.Client = Ext
 							},
 							doLayout : function(shallow, force) {
 								// custom override ensures that this group will have a maximum
-								// height of
-								// 2 items
+								// height of 2 items. It automatically changes the number of
+								// columns
 								this.layout.columns = Math.ceil(this.items.getCount() / 2);
 								Ext.ButtonGroup.prototype.doLayout.call(this, shallow, force);
 							},
@@ -1041,7 +1050,17 @@ EE.Client = Ext
 									this.helpProvider.showHelpTooltip('events', toolEl, 'left');
 								},
 								scope : this
-							} ]
+							} ],
+							listeners : {
+								afterlayout : function() {
+									if (toolbar) {
+										// performs shallow layout pass of toolbar after layout,
+										// since the button group has dynamic content, overflow menu
+										// could fail after startup
+										toolbar.doLayout(true);
+									}
+								}
+							}
 						});
 
 						var timePeriodPicker = new Ext.ux.EE.TimePeriodPicker({
@@ -1064,7 +1083,7 @@ EE.Client = Ext
 						// delayed
 						this.filter.setInterval(timePeriodPicker.begin, timePeriodPicker.end, true);
 
-						var toolbar = new Ext.Toolbar({
+						toolbar = new Ext.Toolbar({
 							height : 72,
 							region : "north",
 							enableOverflow : true,
@@ -1259,8 +1278,18 @@ EE.Client = Ext
 							items : [ this.mapPanel, layerPanel, this.attributesPanelDummyEast, this.attributesPanelDummySouth,
 									toolbar ],
 							plugins : [ 'fittoparent' // plugin to dynamically resize
-							]
-
+							],
+							listeners : {
+								afterrender : {
+									// Force an additional toolbar layout pass after first render
+									// pass to ensure creation of overflow menus if window is
+									// already too small
+									single : true,
+									fn : function() {
+										toolbar.doLayout(true);
+									}
+								}
+							}
 						});
 					},
 
