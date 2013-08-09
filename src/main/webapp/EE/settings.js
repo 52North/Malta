@@ -15,6 +15,9 @@
  */
 Ext.namespace("EE.Settings");
 
+//name of the application window
+EE.Settings.title = "Extreme Events Viewer";
+
 // Base layers, automatically setting isBaseLayer config option to true
 // Find more WMS Layers at http://www.mapmatters.org
 EE.Settings.baseLayers = [ new OpenLayers.Layer.OSM(null, null, {}),
@@ -77,63 +80,72 @@ EE.Settings.eeCats = {
 			strokeColor : '#A52A2A', // brown, use hex values for ful browser
 			// support
 			fillColor : '#A52A2A'
-		}
+		},
+		enabled : false
 	},
 	'Rainfall' : {
 		title : 'Rainfall',
 		style : {
 			strokeColor : '#00FFFF', // cyan
 			fillColor : '#00FFFF'
-		}
+		},
+		enabled : false
 	},
 	'Storm' : {
 		title : 'Storm',
 		style : {
 			strokeColor : '#800080', // purple
 			fillColor : '#800080'
-		}
+		},
+		enabled : true
 	},
 	'Cold' : {
 		title : 'Cold',
 		style : {
 			strokeColor : '#0000FF', // blue
 			fillColor : '#0000FF'
-		}
+		},
+		enabled : true
 	},
 	'Heat' : {
 		title : 'Heat',
 		style : {
 			strokeColor : '#FF0000', // red
 			fillColor : '#FF0000'
-		}
+		},
+		enabled : false
 	},
 	'Flood' : {
 		title : 'Flood',
 		style : {
 			strokeColor : '#008000', // green
 			fillColor : '#008000'
-		}
+		},
+		enabled : false
 	},
 	'Drought' : {
 		title : 'Drought',
 		style : {
 			strokeColor : '#FFA500', // orange
 			fillColor : '#FFA500'
-		}
+		},
+		enabled : false
 	},
 	'Landslide' : {
 		title : 'Landslide',
 		style : {
 			strokeColor : '#DEB887', // burly wood
 			fillColor : '#DEB887'
-		}
+		},
+		enabled : false
 	},
 	'Snowslide' : {
 		title : 'Snowslide',
 		style : {
 			strokeColor : '#D3D3D3 ', // light gray
 			fillColor : '#D3D3D3 '
-		}
+		},
+		enabled : false
 	}
 };
 
