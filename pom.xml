@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.n52.geostatistics</groupId>
 	<artifactId>malta</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.7</version>
 	<packaging>war</packaging>
 
 	<name>Malta</name>
@@ -46,6 +46,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<malta.js.dir>EE</malta.js.dir>
 	</properties>
 
 	<build>
@@ -105,7 +106,7 @@
 				<configuration>
 					<header>src/main/resources/license_header.txt</header>
 					<includes>
-						<include>src/main/webapp/EE/**/*.js</include>
+						<include>src/main/webapp/${malta.js.dir}/**/*.js</include>
 					</includes>
 					<strictCheck>true</strictCheck>
 					<properties>
@@ -129,37 +130,38 @@
 	<profiles>
 		<profile>
 			<id>customize</id>
-			<!-- for development purposes ONLY -->
 
 			<build>
 				<plugins>
+					<!-- because the Maven war plugin copies resources during the phase
+						war:war a customization with copy-resources does not work, see
+						http://stackoverflow.com/questions/12610537/use-maven-to-copy-files-to-web-inf-before-war-is-packaged -->
 					<plugin>
-						<artifactId>maven-resources-plugin</artifactId>
-						<version>2.5</version>
-						<executions>
-							<execution>
-								<id>copy-resources</id>
-								<phase>package</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${basedir}/target</outputDirectory>
-									<overwrite>true</overwrite>
-									<resources>
-										<resource>
-											<directory>${customizationDir}</directory>
-											<targetPath>/${build.finalName}/EE/</targetPath>
-											<includes>
-												<include>**/*.js</include>
-												<include>**/*.jpg</include>
-												<include>**/*.html</include>
-											</includes>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
-						</executions>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.3</version>
+						<configuration>
+							<webXml>src/main/resources/WEB-INF/web.xml</webXml>
+							<webResources>
+								<resource>
+									<directory>${customizationDir}</directory>
+									<targetPath>${malta.js.dir}</targetPath>
+									<includes>
+										<include>**/*.js</include>
+										<include>**/*.jpg</include>
+										<include>**/*.html</include>
+									</includes>
+								</resource>
+								<resource>
+									<directory>src/main/webapp/</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>**/*.html</include>
+										<include>**/*.js</include>
+									</includes>
+								</resource>
+							</webResources>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>

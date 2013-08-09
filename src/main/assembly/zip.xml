@@ -9,7 +9,7 @@
 	</formats>
 	<fileSets>
 		<fileSet>
-			<directory>${project.build.directory}/${project.build.finalName}/</directory>
+			<directory>${project.build.directory}/${project.build.finalName}</directory>
 			<outputDirectory>/</outputDirectory>
 		</fileSet>
 	</fileSets>
