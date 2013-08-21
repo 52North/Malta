@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.n52.geostatistics</groupId>
 	<artifactId>malta</artifactId>
-	<version>1.0.7</version>
+	<version>1.0.8</version>
 	<packaging>war</packaging>
 
 	<name>Malta</name>
@@ -47,6 +47,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<malta.js.dir>EE</malta.js.dir>
+		<malta.dev.dir>../client/test</malta.dev.dir>
 	</properties>
 
 	<build>
@@ -129,9 +130,63 @@
 
 	<profiles>
 		<profile>
-			<id>customize</id>
+			<!-- this profile can be used in Eclipse with WTP for direc publishing
+				to a webserver, see also http://stackoverflow.com/questions/16280858/maven-profiles-and-tomcat-in-eclipse
+			-->
+			<id>develop</id>
+
+			<properties>
+				<malta.profile.flag>dev</malta.profile.flag>
+			</properties>
 
 			<build>
+				<finalName>${project.artifactId}-${malta.profile.flag}-${project.version}</finalName>
+
+				<plugins>
+					<!-- because the Maven war plugin copies resources during the phase
+						war:war a customization with copy-resources does not work, see
+						http://stackoverflow.com/questions/12610537/use-maven-to-copy-files-to-web-inf-before-war-is-packaged -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.3</version>
+						<configuration>
+							<webXml>src/main/resources/WEB-INF/web.xml</webXml>
+							<webResources>
+								<resource>
+									<directory>${malta.dev.dir}</directory>
+									<targetPath>${malta.js.dir}</targetPath>
+									<includes>
+										<include>**/*.js</include>
+										<include>**/*.jpg</include>
+										<include>**/*.html</include>
+									</includes>
+								</resource>
+								<resource>
+									<directory>src/main/webapp/</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>**/*.html</include>
+										<include>**/*.js</include>
+									</includes>
+								</resource>
+							</webResources>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>customize</id>
+
+			<properties>
+				<!-- you can overwrite this when calling mvn! -->
+				<malta.profile.flag>custom</malta.profile.flag>
+			</properties>
+
+			<build>
+				<finalName>${project.artifactId}-${malta.profile.flag}-${project.version}</finalName>
+
 				<plugins>
 					<!-- because the Maven war plugin copies resources during the phase
 						war:war a customization with copy-resources does not work, see
