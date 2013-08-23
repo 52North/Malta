@@ -47,7 +47,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<malta.js.dir>EE</malta.js.dir>
-		<malta.dev.dir>../client/test</malta.dev.dir>
+		<malta.dev.dir>${basedir}/../client/test</malta.dev.dir>
 	</properties>
 
 	<build>
@@ -153,6 +153,15 @@
 						<configuration>
 							<webXml>src/main/resources/WEB-INF/web.xml</webXml>
 							<webResources>
+								<!-- changed ordering -->
+								<resource>
+									<directory>src/main/webapp/</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>**/*.html</include>
+										<include>**/*.js</include>
+									</includes>
+								</resource>
 								<resource>
 									<directory>${malta.dev.dir}</directory>
 									<targetPath>${malta.js.dir}</targetPath>
@@ -160,14 +169,6 @@
 										<include>**/*.js</include>
 										<include>**/*.jpg</include>
 										<include>**/*.html</include>
-									</includes>
-								</resource>
-								<resource>
-									<directory>src/main/webapp/</directory>
-									<filtering>true</filtering>
-									<includes>
-										<include>**/*.html</include>
-										<include>**/*.js</include>
 									</includes>
 								</resource>
 							</webResources>
