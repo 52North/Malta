@@ -26,6 +26,8 @@ OpenLayers.Format.WFST.v1_1_0_multigeometrynames = OpenLayers.Class(OpenLayers.F
 	writers : OpenLayers.Util.applyDefaults({
 		"wfs" : OpenLayers.Util.applyDefaults({
 			"GetFeature" : function(options) {
+				// writers.wfs.GetFeature of OpenLayers.Format.WFST.v1, modified to
+				// include geometryName attribute in Query-node writer
 				var node = this.createElementNSPlus("wfs:GetFeature", {
 					attributes : {
 						service : "WFS",
@@ -54,6 +56,10 @@ OpenLayers.Format.WFST.v1_1_0_multigeometrynames = OpenLayers.Class(OpenLayers.F
 				return node;
 			},
 			"Query" : function(options) {
+				// OpenLayers.Format.WFST.v1_1_0 version, extended to set geometryName
+				// attribute in generated filter instance and to use custom
+				// setFilterProperty
+
 				if (options.filter) {
 					options.filter._geometryName = options.geometryName;
 				}
@@ -106,19 +112,21 @@ OpenLayers.Format.WFST.v1_1_0_multigeometrynames = OpenLayers.Class(OpenLayers.F
 	}
 });
 
-OpenLayers.Format.Filter.v1_1_0.prototype.writers.ogc.PropertyIsNull = function(filter) {
-	var node = this.createElementNSPlus("ogc:PropertyIsNull");
-	this.writeNode("PropertyName", filter, node);
-	return node;
-};
-OpenLayers.Format.Filter.v1_1_0.prototype.filterMap['NULL'] = 'PropertyIsNull';
+/*
+ * Already included in OL 2.13
+ * 
+ * OpenLayers.Format.Filter.v1_1_0.prototype.writers.ogc.PropertyIsNull =
+ * function(filter) { var node = this.createElementNSPlus("ogc:PropertyIsNull");
+ * this.writeNode("PropertyName", filter, node); return node; };
+ * OpenLayers.Format.Filter.v1_1_0.prototype.filterMap['NULL'] =
+ * 'PropertyIsNull';
+ */
 
 OpenLayers.EE = OpenLayers.EE || {};
 OpenLayers.EE.Strategy = OpenLayers.EE.Strategy || {};
 
 /**
- * Extension of BBOX Strategy to also query for empty geometries. Overrides
- * Filter format to support PropertyIsNull filter, which is not part of OL 2.12
+ * Extension of BBOX Strategy to also query for empty geometries.
  */
 OpenLayers.EE.Strategy.BBOX = OpenLayers.Class(OpenLayers.Strategy.BBOX, {
 
