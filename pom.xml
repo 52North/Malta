@@ -37,7 +37,7 @@
 
 	<licenses>
 		<license>
-			<name>Apache 2</name>
+			<name>The Apache Software License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 			<comments>A business-friendly OSS license</comments>
@@ -100,10 +100,9 @@
 			</plugin>
 
 			<plugin>
-				<!-- check for correct source file headers during test phase: http://code.google.com/p/maven-license-plugin/wiki/HowTo -->
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<version>1.9.0</version>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>2.2</version>
 				<configuration>
 					<header>src/main/resources/license_header.txt</header>
 					<includes>
