@@ -1,3 +1,7 @@
+# ARCHIVED
+
+This project is no longer maintained and will not receive any further updates. If you plan to continue using it, please be aware that future security issues will not be addressed.
+
 # Malta
 
 Malta is a Javascript web client to explore a database of extreme weather events interactively. It supports a map view and a table view of the data and relies completely on a OGC Web Features Service (WFS) to access the data.
